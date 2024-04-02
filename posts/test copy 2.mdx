@@ -1,40 +1,34 @@
 ---
-title: "Why You Should Learn Next.js in 2024",
-description: "Discover the reasons why Next.js is a must-learn technology in 2024, offering powerful features for modern web development",
-tags: ["Next.js", "web development", "JavaScript"," React", "2024"],
-date: '2015-03-02',
-imageUrl: "../Images/test.jpeg",
-imageAlt: "Next.js logo on a laptop screen",
+title: "Duplicate of Post for Today"
+date: "2023-06-8"
+tags: ["next.js", "nextjs", "stuff"]
+desciption: "Duplicate of Post for"
+imageUrl: "../Images/test.jpeg"
 ---
 
-# Why You Should Learn Next.js in 2024
+<Video id="6h649f2fB9Q" />
 
-In the rapidly evolving landscape of web development, staying ahead of the curve is crucial. Next.js has emerged as a dominant force in modern web development, and here's why you should prioritize learning it in 2024.
+# Why duplicate?!
 
-## 1. Powerful Server-Side Rendering (SSR)
+This is a duplicate post to test SSG in the production.
 
-Next.js provides seamless server-side rendering capabilities out of the box. SSR improves performance, SEO, and user experience by delivering pre-rendered HTML to the client, resulting in faster page loads and better search engine visibility.
+```ts
+const sum = (num1: number, num2: number): number => {
+  return num1 + num2;
+};
 
-<CustomImage src="../Images/test.jpeg" alt="test alt" />
+console.log(sum(4, 8)); //12
+```
 
-## 2. Versatile Data Fetching Options
+You can use Static Generation for many types of pages, including:
 
-With Next.js, fetching data is flexible and efficient. Whether you're retrieving data at build time, request time, or using incremental static regeneration, Next.js offers solutions tailored to your project's needs. This versatility simplifies complex data handling tasks and enhances application performance.
+- Marketing pages
+- Blog posts
+- E-commerce product listings
+- Help and documentation
 
-## 3. Built-in TypeScript Support
+You should ask yourself: "Can I pre-render this page **ahead** of a user's request?" If the answer is yes, then you should choose Static Generation.
 
-TypeScript has gained widespread adoption in the JavaScript community for its static typing capabilities, which enhance code quality and developer productivity. Next.js seamlessly integrates with TypeScript, enabling you to write safer and more maintainable code without additional setup or configuration.
+On the other hand, Static Generation is **not** a good idea if you cannot pre-render a page ahead of a user's request. Maybe your page shows frequently updated data, and the page content changes on every request.
 
-## 4. Excellent Developer Experience (DX)
-
-Next.js prioritizes developer experience, offering a streamlined development process with features like hot module replacement, automatic code splitting, and fast refresh. These tools empower developers to build high-quality applications efficiently, reducing development time and accelerating time-to-market.
-
-## 5. Growing Ecosystem and Community Support
-
-As Next.js continues to gain traction, its ecosystem flourishes with a rich library of plugins, tools, and extensions. Additionally, the vibrant Next.js community provides valuable resources, tutorials, and support, making it easier for developers to learn and grow their skills.
-
-## Conclusion
-
-In conclusion, learning Next.js in 2024 is a strategic investment for any web developer. Its powerful features, versatility, TypeScript support, excellent developer experience, and thriving ecosystem position it as a leading framework for modern web development. Embrace Next.js today and unlock the potential to create faster, more robust, and feature-rich web applications.
-
-![Next.js logo on a laptop screen](https://example.com/nextjs-image.jpg)
+In that case, you can use **Server-Side Rendering**. It will be slower, but the pre-rendered page will always be up-to-date. Or you can skip pre-rendering and use client-side JavaScript to populate data.
