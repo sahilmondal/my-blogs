@@ -1,0 +1,84 @@
+---
+title: "Everything About Next.js App Routing with API Route Handlers"
+date: "2024-04-06"
+tags: ["Next.js", "routing", "API", "routes"]
+description: "Explore the ins and outs of Next.js app routing with the new App Router, including creating dynamic routes, handling API requests, and building a seamless user experience."
+imageUrl: "nextjs-routing.webp"
+imageAlt: "Next.js routing"
+---
+
+<CustomImage src={"nextjs-routing.webp"} alt="Next.js routing" />
+
+# Introduction
+
+Next.js is a powerful framework for building server-rendered React applications. One of its standout features is its flexible routing system, which has seen a significant upgrade with the introduction of the App Router in Next.js 13. This new approach offers improved performance and a more intuitive development experience. Let's dive in and explore how to leverage the App Router for dynamic routes, API handling, and building user-friendly applications.
+
+## Dynamic Routes in the App Directory
+
+With the App Router, dynamic routes reside within the `app` directory. Here's the breakdown:
+
+- Create a directory structure reflecting your route (e.g., `app/blog/[slug].js`).
+- Inside the file, define a `default` function that acts as your page component.
+- Access the dynamic parameter (`slug`) using the `useRouter` hook.
+
+Here's an example:
+
+```jsx
+// app/blog/[slug].js
+
+import { useRouter } from "next/router";
+
+export default function BlogPost({ post }) {
+  const router = useRouter();
+  const { slug } = router.query;
+
+  // Access post data using slug
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      {/* Display post content */}
+    </div>
+  );
+}
+
+export async function getStaticProps({ params }) {
+  const { slug } = params;
+  const post = await fetchPostBySlug(slug);
+
+  return {
+    props: { post },
+  };
+}
+```
+
+## API Routes: Enduring Power in the App Directory
+
+API routes remain a valuable tool for handling serverless functions. They continue to reside within the app/api directory, maintaining consistency from the previous approach.
+
+Here's a basic example of an API route that fetches blog posts:
+
+```tsx
+// app/api/posts.js
+
+export default async function handler(req, res) {
+  try {
+    const posts = await fetchPostsFromDatabase();
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+```
+
+## Considerations and Best Practices
+
+Incremental Migration: Next.js allows for gradual migration from the Pages Router to the App Router. Start by moving individual routes for a smooth transition.
+Data Fetching: Leverage `getServerSideProps` or `getStaticProps` for efficient data fetching in App Router components.
+Server Components: Explore Server Components for advanced use cases involving server-side rendering and fine-grained control over data fetching.
+
+## Embrace the Future of Next.js Routing
+
+The Next.js App Router offers a powerful and future-proof way to build dynamic and performant web applications. By utilizing its features, you can create a seamless user experience while taking advantage of modern React features.
+
+Happy Next.js development!🚀
