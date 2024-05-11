@@ -1,0 +1,101 @@
+---
+title: "Next.js Server Actions: A Deep Dive"
+date: "2024-04-29"
+tags: ["Next.js", "server actions", "backend"]
+description: "Explore Next.js Server Actions, asynchronous functions that run exclusively on the server, allowing direct data mutations without API endpoints."
+imageUrl: "nextjs-server-actions.jpg"
+imageAlt: "Next.js Server Actions"
+---
+
+<CustomImage src={"seo-best-practices.png"} alt="Next.js routing" />
+
+# Next.js Server Actions:
+
+Next.js, a popular React framework, continues to evolve with new features. One such feature is **Server Actions**, which allows you to directly create or modify data on the server without going through an API endpoint. In this blog post, we'll explore what Server Actions are, how they work, and how you can leverage them in your Next.js applications.
+
+## What Are Server Actions?
+
+Server Actions are asynchronous functions that run exclusively on the server side. They provide a seamless way to handle server-side data mutations, reduce client-side JavaScript, and enhance form handling. Here are the key points about Server Actions:
+
+1. **Server-Side Execution**: Server Actions execute only on the server. Unlike regular client-side functions, they don't run in the browser.
+
+2. **Data Mutations**: You can use Server Actions to create or modify data directly on the server. For example, updating a user's profile, saving form submissions, or handling database operations.
+
+3. **No API Endpoints**: With Server Actions, you don't need to create separate API endpoints. Instead, you define these actions within your Next.js app.
+
+4. **Integration with Next.js Caching and Revalidation**: When a Server Action is invoked, Next.js can return both the updated UI and new data in a single server roundtrip. This integration leverages Next.js's caching and revalidation architecture[^1^][1].
+
+## How to Define a Server Action
+
+Let's dive into how you can define and use Server Actions in your Next.js app:
+
+### 1. Marking a Function as a Server Action
+
+To create a Server Action, use the `use server` directive. You can place it at the top of an async function to mark that function as a Server Action. For example:
+
+```tsx
+// pages/index.tsx
+export default function Home() {
+  // Server Action
+  async function createUser() {
+    'use server'
+    // Perform data creation logic here
+  }
+
+  return (
+    // Your UI components
+  );
+}
+```
+
+### 2. Using Server Actions in Client Components
+
+Client Components can import and use Server Actions. Create a separate file (e.g., actions.ts) and mark all functions within it as Server Actions:
+
+```tsx
+// actions.ts
+"use server";
+
+export async function updateUserProfile() {
+  // Update user profile logic
+}
+
+// Other Server Actions...
+```
+
+Then, in your client-side components:
+
+```tsx
+
+// components/ProfileForm.tsx
+import { updateUserProfile } from '@/actions';
+
+export function ProfileForm() {
+  // Handle form submission
+  const handleSubmit = async (formData) => {
+    await updateUserProfile(formData);
+    // Update UI or perform other actions
+  };
+
+return (
+// Your form UI
+);
+}
+```
+
+### 3. Invoking Server Actions
+
+You can invoke Server Actions using the action attribute in a <form/> element. Server Components support progressive enhancement, meaning the form will be submitted even if JavaScript hasn’t loaded yet or is disabled. In Client Components, forms invoking Server Actions will queue submissions if JavaScript isn’t loaded yet, prioritizing client hydration.
+
+### 4. Serialization and Inheritance
+
+- Server Actions must return serializable data (compatible with React).
+- They inherit the runtime and route segment configuration from the page or layout where they are used.
+
+## Conclusion
+
+Next.js Server Actions provide a powerful way to handle server-side data mutations directly within your app. By leveraging them, you can simplify your architecture, improve performance, and enhance the user experience. Keep an eye on the Next.js documentation for updates and best practices1!
+
+Remember to experiment with Server Actions in your projects and explore their full potential.
+
+Happy coding! 🚀

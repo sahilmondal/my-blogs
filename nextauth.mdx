@@ -1,0 +1,109 @@
+---
+title: "Authentication with NextAuth.js in Next.js Apps"
+date: "2024-05-1"
+tags: ["Next.js", "authentication", "NextAuth", "auth.js"]
+description: "Learn how to add secure authentication to your Next.js app using NextAuth.js."
+imageUrl: "nextauth.jpeg"
+imageAlt: "NextAuth.js authentication"
+---
+
+<CustomImage src={"nextauth.jpeg"} alt="Next.js routing" />
+
+# Introduction
+
+Authentication is a critical aspect of any web application. With **NextAuth.js**, you can easily implement secure authentication in your Next.js projects. Let's dive into the steps to get started:
+
+## What is NextAuth.js?
+
+NextAuth.js is an authentication library specifically designed for Next.js applications. It provides a unified way to handle authentication, session management, and authorization. Here's why you should consider using NextAuth.js:
+
+- **Built-in Providers**: NextAuth.js supports popular authentication providers out of the box, including Google, Facebook, GitHub, and more.
+
+- **Custom Providers**: You can create custom authentication providers or use your own username/password store.
+
+- **Magic Links and Passwordless Authentication**: NextAuth.js simplifies passwordless authentication with magic links sent via email.
+
+## Getting Started
+
+### 1. **Install NextAuth.js**:
+
+- First, install NextAuth.js in your Next.js project:
+
+```bash
+npm install next-auth
+```
+
+### 2. Create a NextAuth Configuration File: Create a [...nextauth].js file in the pages/api/auth directory. This file defines your authentication providers and options. For example:
+
+```tsx
+// pages/api/auth/[...nextauth].js
+import NextAuth from "next-auth";
+import Providers from "next-auth/providers";
+
+export default NextAuth({
+  providers: [
+    Providers.Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    // Add other providers as needed
+  ],
+  // Other configuration options
+});
+```
+
+### 3. Configure Environment Variables: Set your authentication provider credentials (e.g., Google API keys) as environment variables in your .env.local file.
+
+### 4. Use NextAuth.js in Your Components: In your login or sign-up form, use NextAuth.js to handle authentication. For example:
+
+```tsx
+// pages/login.tsx
+import { signIn } from "next-auth/react";
+
+const LoginPage = () => {
+  const handleLogin = async () => {
+    await signIn("google"); // Use the provider name (e.g., "google")
+  };
+
+  return (
+    <div>
+      <button onClick={handleLogin}>Login with Google</button>
+    </div>
+  );
+};
+
+export default LoginPage;
+```
+
+### 5. Protect Routes: To protect specific routes, use NextAuth.js session management. For example:
+
+```tsx
+// pages/profile.tsx
+import { useSession } from "next-auth/react";
+
+const ProfilePage = () => {
+  const { data: session } = useSession();
+
+  if (!session) {
+    // Redirect to login page if not authenticated
+    // You can also show an "Access Denied" message
+  }
+
+  return (
+    <div>
+      <h1>Welcome, {session?.user?.name}!</h1>
+      {/* Other profile content */}
+    </div>
+  );
+};
+
+export default ProfilePage;
+```
+
+# Conclusion
+
+NextAuth.js simplifies authentication in Next.js apps, allowing you to focus on building features rather than handling authentication complexities. Explore its features, choose your providers, and create a seamless authentication experience for your users!
+
+Remember to secure your environment variables and follow best practices for authentication.
+
+Happy coding! 🚀
